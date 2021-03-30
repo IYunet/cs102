@@ -43,11 +43,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    build_group = []
-    while values != []:
-        build_group += [values[:n]]
-        del values[:n]
-    return build_group
+    return [values[i : i + n] for i in range(0, len(values), n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -73,10 +69,10 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    help_full = []
+    col_values = []
     for i in range(len(grid)):
-        help_full += [grid[i][pos[1]]]
-    return help_full
+        col_values += [grid[i][pos[1]]]
+    return col_values
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -90,13 +86,13 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    help_full_2 = []
+    col_values_2 = []
     add_poss = (pos[0] // 3) * 3
     add_poss_1 = (pos[1] // 3) * 3
     for i in range(3):
         for j in range(3):
-            help_full_2 += [grid[i + add_poss][j + add_poss_1]]
-    return help_full_2
+            col_values_2 += [grid[i + add_poss][j + add_poss_1]]
+    return col_values_2
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
@@ -127,12 +123,12 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    options = set("123456789")
-    row_str = set(get_row(grid, pos))
-    col_str = set(get_col(grid, pos))
-    block_str = set(get_block(grid, pos))
-    suggestions = options - row_str - col_str - block_str
-    return suggestions
+    return (
+        set("123456789")
+        - set(get_row(grid, pos))
+        - set(get_col(grid, pos))
+        - set(get_block(grid, pos))
+    )
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
