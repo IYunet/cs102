@@ -1,3 +1,4 @@
+import copy
 import pathlib
 import random
 import typing as tp
@@ -30,21 +31,54 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         # Copy from previous assignment
-        pass
+        grid = []
+        grid_add = []
+        if randomize == False:
+            for i in range(0, self.cell_height):
+                for j in range(0, self.cell_width):
+                    grid_add += [0]
+                grid += [grid_add]
+                grid_add = []
+        else:
+            for i in range(0, self.cell_height):
+                for j in range(0, self.cell_width):
+                    grid_add += [random.randint(0, 1)]
+                grid += [grid_add]
+                grid_add = []
+        return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
         # Copy from previous assignment
-        pass
+        neighbours = []
+        row, col = cell
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if (
+                    self.cell_height > row + i >= 0
+                    and self.cell_width > col + j >= 0
+                    and (i, j) != (0, 0)
+                ):
+                    neighbours += [self.grid[row + i][col + j]]
+        return neighbours
 
     def get_next_generation(self) -> Grid:
         # Copy from previous assignment
-        pass
+        clone_grid = self.create_grid(False)
+        for i in range(self.cell_height):
+            for j in range(self.cell_width):
+                if sum(self.get_neighbours((i, j))) == 3 and (self.grid[i][j] == 0):
+                    clone_grid[i][j] = 1
+                elif 1 < sum(self.get_neighbours((i, j))) < 4 and self.grid[i][j] == 1:
+                    clone_grid[i][j] = 1
+        return clone_grid
 
     def step(self) -> None:
         """
         Выполнить один шаг игры.
         """
-        pass
+        self.prev_generation = copy.deepcopy(self.curr_generation)
+        self.curr_generation = self.get_next_generation()
+        self.generations += 1
 
     @property
     def is_max_generations_exceeded(self) -> bool:
