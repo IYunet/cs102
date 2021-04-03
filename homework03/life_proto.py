@@ -44,7 +44,7 @@ class GameOfLife:
         self.screen.fill(pygame.Color("white"))
 
         # Создание списка клеток
-        # PUT YOUR CODE HERE
+        self.grid = self.create_grid(True)
 
         running = True
         while running:
@@ -54,8 +54,9 @@ class GameOfLife:
             self.draw_lines()
 
             # Отрисовка списка клеток
+            self.draw_grid()
             # Выполнение одного шага игры (обновление состояния ячеек)
-            # PUT YOUR CODE HERE
+            self.grid = self.get_next_generation()
 
             pygame.display.flip()
             clock.tick(self.speed)
@@ -151,4 +152,11 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        pass
+        clone_grid = self.create_grid(False)
+        for i in range(self.cell_height):
+            for j in range(self.cell_width):
+                if sum(self.get_neighbours((i, j))) == 3 and (self.grid[i][j] == 0):
+                    clone_grid[i][j] = 1
+                elif 1 < sum(self.get_neighbours((i, j))) < 4 and self.grid[i][j] == 1:
+                    clone_grid[i][j] = 1
+        return clone_grid
