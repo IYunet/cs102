@@ -95,7 +95,10 @@ class GameOfLife:
         """
         Изменилось ли состояние клеток с предыдущего шага.
         """
-        pass
+        if self.curr_generation == self.prev_generation:
+            return False
+        else:
+            return True
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
@@ -103,6 +106,8 @@ class GameOfLife:
         Прочитать состояние клеток из указанного файла.
         """
         pass
+
+    open
 
     def save(self, filename: pathlib.Path) -> None:
         """
