@@ -117,4 +117,9 @@ class GameOfLife:
         """
         Сохранить текущее состояние клеток в указанный файл.
         """
-        pass
+        curr_file = open(filename, "w")
+        for row in self.curr_generation:
+            for col in row:
+                curr_file.write(str(col))
+            curr_file.write("\n")
+        curr_file.close()
