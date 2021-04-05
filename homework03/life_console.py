@@ -30,7 +30,7 @@ class Console(UI):
                     i != 0 and i != height - 1 and j == width - 1
                 ):
                     line += "|"
-                elif j != 0 and j != width - 1:
+                elif j != 0 and j != width - 1 and i != 0 and i != height - 1:
                     line += " "
         screen.addstr(line)
 
