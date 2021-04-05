@@ -17,7 +17,6 @@ class GUI(UI):
         self.height = self.life.rows * self.cell_size
         self.cell_height = self.life.rows
         self.cell_width = self.life.cols
-        self.grid = self.life.curr_generation
 
     def draw_lines(self) -> None:
         for x in range(0, self.width, self.cell_size):
@@ -29,7 +28,7 @@ class GUI(UI):
         lenght = self.cell_size - 1
         for i in range(self.cell_height):
             for j in range(self.cell_width):
-                if self.grid[i][j] == 1:
+                if self.life.curr_generation[i][j] == 1:
                     color = pygame.Color("green")
                 else:
                     color = pygame.Color("white")
@@ -40,5 +39,41 @@ class GUI(UI):
                 )
 
     def run(self) -> None:
-        # Copy from previous assignment
-        pass
+        pygame.init()
+        clock = pygame.time.Clock()
+        pygame.display.set_caption("Game of life")
+        self.screen.fill(pygame.Color("white"))
+
+        pause = False
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    pause = True
+
+            self.draw_lines()
+
+            if pause:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        pause = False
+                    elif event.type == pygame.MOUSEBUTTONUP:
+                        pos = event.pos
+                        row = pos[1] // self.cell_size
+                        col = pos[0] // self.cell_size
+                        if self.life.curr_generation[row][col]:
+                            self.life.curr_generation[row][col] = 0
+                        else:
+                            self.life.curr_generation[row][col] = 1
+                        self.draw_grid()
+                        pygame.display.flip()
+            else:
+                self.life.step()
+                self.draw_grid()
+                pygame.display.flip()
+                clock.tick(self.speed)
+        pygame.quit()
