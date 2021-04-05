@@ -36,7 +36,20 @@ class Console(UI):
 
     def draw_grid(self, screen) -> None:
         """ Отобразить состояние клеток. """
-        pass
+        height, width = screen.getmaxyx()
+
+        x = (width - self.life.cols) // 2
+        y = (height - self.life.rows) // 2
+
+        for n_row, row in enumerate(self.life.curr_generation):
+            for n_col, col in enumerate(row):
+                if col == 1:
+                    try:
+                        screen.addstr(n_row + y, n_col + x, "*")
+                    except curses.error:
+                        pass
+        screen.refresh()
+        screen.getch()
 
     def run(self) -> None:
         screen = curses.initscr()
