@@ -32,7 +32,11 @@ class Console(UI):
                     line += "|"
                 elif j != 0 and j != width - 1 and i != 0 and i != height - 1:
                     line += " "
-        screen.addstr(line)
+            try:
+                screen.addstr(line)
+            except curses.error:
+                pass
+            line = ""
 
     def draw_grid(self, screen) -> None:
         """ Отобразить состояние клеток. """
