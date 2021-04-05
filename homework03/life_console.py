@@ -10,7 +10,29 @@ class Console(UI):
 
     def draw_borders(self, screen) -> None:
         """ Отобразить рамку. """
-        pass
+        screen.clear()
+        height, width = screen.getmaxyx()
+        line = ""
+        for i in range(height):
+            for j in range(width):
+                if (
+                    (i == 0 and j == 0)
+                    or (i == height - 1 and j == width - 1)
+                    or (i == 0 and j == width - 1)
+                    or (i == height - 1 and j == 0)
+                ):
+                    line += "+"
+                elif (i == 0 and j != 0 and j != width - 1) or (
+                    i == height - 1 and j != 0 and j != width - 1
+                ):
+                    line += "-"
+                elif (i != 0 and i != height - 1 and j == 0) or (
+                    i != 0 and i != height - 1 and j == width - 1
+                ):
+                    line += "|"
+                elif j != 0 and j != width - 1:
+                    line += " "
+        screen.addstr(line)
 
     def draw_grid(self, screen) -> None:
         """ Отобразить состояние клеток. """
