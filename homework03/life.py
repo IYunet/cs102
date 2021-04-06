@@ -1,6 +1,6 @@
-import copy
 import pathlib
 import random
+import copy
 import typing as tp
 
 import pygame
