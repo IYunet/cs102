@@ -11,6 +11,7 @@ class GUI(UI):
         self.speed = speed
         self.screen = pygame.display.set_mode(
             (self.life.cols * self.cell_size, self.life.rows * self.cell_size)
+            
         )  
 
     def draw_lines(self) -> None:      
