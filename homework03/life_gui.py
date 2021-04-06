@@ -7,11 +7,10 @@ from ui import UI
 class GUI(UI):
     def __init__(self, life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
         super().__init__(life)
-        self.cell_size = cell_size
         self.screen = pygame.display.set_mode(
             (self.life.cols * self.cell_size, self.life.rows * self.cell_size)
         )
-        
+        self.cell_size = cell_size
         self.speed = speed  
 
     def draw_lines(self) -> None:
