@@ -19,5 +19,6 @@
     },
     "files.exclude": {
         "**/.mypy_cache": true
-    }
+    },
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.9/bin/python3"
 }
