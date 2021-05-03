@@ -51,8 +51,18 @@ def read_object(sha: str, gitdir: pathlib.Path) -> tp.Tuple[str, bytes]:
 
 
 def read_tree(data: bytes) -> tp.List[tp.Tuple[int, str, str]]:
-    # PUT YOUR CODE HERE
-    ...
+    tree = []
+    while data:
+        start_sha = data.index(b"\00")
+        mode_b: bytes
+        name_b: bytes
+        mode_b, name_b = data[:start_sha].split(b" ")
+        mode = mode_b.decode()
+        name = name_b.decode()
+        sha = data[start_sha + 1 : start_sha + 21]
+        tree.append((int(mode), name, sha.hex()))
+        data = data[start_sha + 21 :]
+    return tree
 
 
 def cat_file(obj_name: str, pretty: bool = True) -> None:
