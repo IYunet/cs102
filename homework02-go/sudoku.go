@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"path/filepath"
 )
 
 func readSudoku(filename string) ([][]byte, error) {
@@ -187,6 +188,19 @@ func generateSudoku(N int) [][]byte {
 }
 
 func main() {
-	grid, _ := readSudoku("puzzle1.txt")
-	fmt.Println(solve(grid))
+	puzzles, err := filepath.Glob("puzzle*.txt")
+	if err != nil {
+		fmt.Printf("Could not find any puzzles")
+		return
+	}
+	for _, fname := range puzzles {
+		go func(fname string) {
+			grid, _ := readSudoku(fname)
+			solution, _ := solve(grid)
+			fmt.Println("Solution for", fname)
+			display(solution)
+		}(fname)
+	}
+	var input string
+	fmt.Scanln(&input)
 }
