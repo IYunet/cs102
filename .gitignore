@@ -1,7 +1,17 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+.DS_Store
+for_read_save.txt
+build/
+dist/
+httpserver.egg-info/
+*.cfg
+*.png
+*.whl
+*.ico
+*.md
+wsgiserver.egg-info/
 # C extensions
 *.so
 
