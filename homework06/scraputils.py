@@ -76,6 +76,3 @@ def get_news(url, n_pages=1):
         n_pages -= 1
         n_pages_requer += 1
     return news
-
-
-news_list = get_news("https://news.ycombinator.com/news", n_pages=2)
