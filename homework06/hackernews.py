@@ -44,11 +44,15 @@ def classify_news():
     s = session()
     model = NaiveBayesClassifier()
     train_set = s.query(News).filter(News.label != None).all()
-    model.fit([clean(news.title).lower() for news in train_set], [news.label for news in train_set])
+    model.fit(
+        [clean(news.title).lower() for news in train_set],
+        [news.label for news in train_set],
+    )
     test = s.query(News).filter(News.label == None).all()
     cell = list(map(lambda x: model.predict(x.title), test))
     return template(
-        "color_template", rows=list(map(lambda x: (x[1], colors[cell[x[0]]]), enumerate(test)))
+        "color_template",
+        rows=list(map(lambda x: (x[1], colors[cell[x[0]]]), enumerate(test))),
     )
 
 
