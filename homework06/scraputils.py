@@ -76,3 +76,14 @@ def get_news(url, n_pages=1):
         n_pages -= 1
         n_pages_requer += 1
     return news
+
+
+def get_news_more(url):
+
+    news = []
+    print("Collecting data from page: {}".format(url))
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    news_list = extract_news(soup)
+    news.extend(news_list)
+    return news
