@@ -35,16 +35,12 @@ class NaiveBayesClassifier:
 
     def class_probability(self, cls, feature):
         """Calculate log of probability"""
-        return log(self.classes[cls]) + sum(
-            self.log_wi_c(cls, w) for w in feature.split()
-        )
+        return log(self.classes[cls]) + sum(self.log_wi_c(cls, w) for w in feature.split())
 
     def predict(self, feature):
         """ Perform classification for one feature. """
         assert len(self.classes) > 0
-        return str(
-            max(self.classes.keys(), key=lambda c: self.class_probability(c, feature))
-        )
+        return str(max(self.classes.keys(), key=lambda c: self.class_probability(c, feature)))
 
     def get_predictions(self, X):
         """ Perform classification on an array of test vectors X. """

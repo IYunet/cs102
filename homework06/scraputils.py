@@ -1,10 +1,5 @@
-import typing as tp
-from pprint import pprint as pp
-from re import sub
-
 import requests
 from bs4 import BeautifulSoup
-from bs4.element import Comment
 
 
 def extract_news(parser):

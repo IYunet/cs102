@@ -4,7 +4,7 @@ from bottle import redirect, request, route, run, template
 
 from bayes import NaiveBayesClassifier
 from db import News, change_label, put_data_into_table, session
-from scraputils import get_news, get_news_more
+from scraputils import get_news_more
 
 
 @route("/news")
