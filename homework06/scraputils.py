@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def extract_news(parser):
-    """ Extract news from a given web page """
+    """Extract news from a given web page"""
     url = "https://news.ycombinator.com/"
 
     news_list = []
@@ -52,12 +52,12 @@ def extract_news(parser):
 
 
 def extract_next_page(n_pages):
-    """ Extract next page URL """
+    """Extract next page URL"""
     return "news?p={}".format(n_pages)
 
 
 def get_news(url, n_pages=1):
-    """ Collect news from a given web page """
+    """Collect news from a given web page"""
     news = []
     n_pages_requer = 2
     while n_pages:
