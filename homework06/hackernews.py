@@ -1,10 +1,10 @@
-import string
+import string  # type: ignore
 
 from bottle import redirect, request, route, run, template  # type: ignore
 
-from bayes import NaiveBayesClassifier
-from db import News, change_label, put_data_into_table, session
-from scraputils import get_news_more
+from bayes import NaiveBayesClassifier  # type: ignore
+from db import News, change_label, put_data_into_table, session  # type: ignore
+from scraputils import get_news_more  # type: ignore
 
 
 @route("/news")
