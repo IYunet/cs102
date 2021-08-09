@@ -17,7 +17,7 @@ jobs:
         pip install pytest black mypy pylint httptools types-jwt
     - name: Run black
       run: |
-        black -l 100 --check --diff --color --exclude "test*" ${{ github.head_ref }}
+        black -l 100 --check --diff --color --exclude "test*" homework06
     - name: Run mypy
       run: |
         mypy --ignore-missing-imports ${{ github.head_ref }}
