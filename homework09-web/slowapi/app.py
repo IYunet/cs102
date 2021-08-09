@@ -25,7 +25,7 @@ class SlowAPI:
 
     def post(self, path=None, **options):
         return self.route(path, method="POST", **options)
-    
+
     def patch(self, path=None, **options):
         return self.route(path, method="PATCH", **options)
 

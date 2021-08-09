@@ -15,7 +15,9 @@ Address = tp.Tuple[str, int]
 
 
 class BaseRequestHandler:
-    def __init__(self, socket: socket.socket, address: Address, server: TCPServer) -> None:
+    def __init__(
+        self, socket: socket.socket, address: Address, server: TCPServer
+    ) -> None:
         self.socket = socket
         self.address = address
         self.server = server
