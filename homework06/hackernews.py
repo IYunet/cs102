@@ -7,7 +7,6 @@ from db import News, change_label, put_data_into_table, session
 from scraputils import get_news_more
 
 
-# -> WEB
 @route("/news")
 def news_list():  # type: ignore
     s = session()
