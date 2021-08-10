@@ -4,7 +4,7 @@ import requests  # type: ignore
 from bs4 import BeautifulSoup
 
 
-def extract_news(parser) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
+def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
     """Extract news from a given web page"""
     url = "https://news.ycombinator.com/"
 
