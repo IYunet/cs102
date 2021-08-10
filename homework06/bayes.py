@@ -14,7 +14,6 @@ class NaiveBayesClassifier:
 
     def fit(self, X, y):
         """Fit Naive Bayes classifier according to titles, labels"""
-
         for xi, yi in zip(X, y):
             self.classes[yi] += 1
             for word in xi.split():
