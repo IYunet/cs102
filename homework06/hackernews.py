@@ -1,21 +1,21 @@
-import string  # type: ignore
+import string
 
-from bottle import redirect, request, route, run, template  # type: ignore
+from bottle import redirect, request, route, run, template
 
-from bayes import NaiveBayesClassifier  # type: ignore
-from db import News, change_label, put_data_into_table, session  # type: ignore
-from scraputils import get_news_more  # type: ignore
+from bayes import NaiveBayesClassifier
+from db import News, change_label, put_data_into_table, session
+from scraputils import get_news_more
 
 
 @route("/news")
-def news_list():
+def news_list():  # type: ignore
     s = session()
     rows = s.query(News).filter(News.label == None).all()
     return template("news_template", rows=rows)
 
 
 @route("/add_label/")
-def add_label():
+def add_label():  # type: ignore
     s = session()
     id = request.query["id"]
     label = request.query["label"]
@@ -27,7 +27,7 @@ counter_update_news = 3
 
 
 @route("/update")
-def update_news():
+def update_news():  # type: ignore
     global counter_update_news
     url = "https://news.ycombinator.com/news?p=" + str(counter_update_news)
     put_data_into_table(get_news_more(url))
@@ -39,7 +39,7 @@ colors = {"good": "#00d2fe", "never": "#180f3b", "maybe": "#969696"}
 
 
 @route("/classify")
-def classify_news():
+def classify_news():  # type: ignore
     global colors
     s = session()
     model = NaiveBayesClassifier()
@@ -56,7 +56,7 @@ def classify_news():
     )
 
 
-def clean(s):
+def clean(s: str) -> str:
     translator = str.maketrans("", "", string.punctuation)
     return s.translate(translator)
 
