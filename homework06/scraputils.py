@@ -53,12 +53,12 @@ def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, st
     return news_list
 
 
-def extract_next_page(n_pages):
+def extract_next_page(n_pages: int) -> str:
     """Extract next page URL"""
     return "news?p={}".format(n_pages)
 
 
-def get_news(url, n_pages=1):
+def get_news(url: str, n_pages: int = 1) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
     """Collect news from a given web page"""
     news = []
     n_pages_requer = 2
@@ -75,7 +75,7 @@ def get_news(url, n_pages=1):
     return news
 
 
-def get_news_more(url):
+def get_news_more(url: str) -> tp.List[tp.Dict[str, tp.Union[int, str]]]:
 
     news = []
     print("Collecting data from page: {}".format(url))
