@@ -1,8 +1,11 @@
-from sqlalchemy import Column, Integer, String, create_engine  # type: ignore
-from sqlalchemy.ext.declarative import declarative_base  # type: ignore
-from sqlalchemy.orm import sessionmaker  # type: ignore
+import typing as tp
 
-from scraputils import get_news  # type: ignore
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.session import Session
+
+from scraputils import get_news
 
 Base = declarative_base()
 engine = create_engine("sqlite:///news.db")
@@ -22,7 +25,7 @@ class News(Base):  # type: ignore
 Base.metadata.create_all(bind=engine)
 
 
-def put_data_into_table(news_list):
+def put_data_into_table(news_list: tp.List[tp.Dict[str, tp.Union[int, str]]]) -> None:
     s = session()
     for each_news in news_list:
         news = News(
@@ -35,7 +38,7 @@ def put_data_into_table(news_list):
         s.commit()
 
 
-def change_label(session, id, label):
+def change_label(session: Session, id: int, label: str) -> None:
     item = session.query(News).get(id)
     item.label = label
     session.commit()
