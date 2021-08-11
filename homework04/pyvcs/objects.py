@@ -11,13 +11,17 @@ from pyvcs.repo import repo_find
 
 
 def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
-    sha = hashlib.sha1((fmt + " " + str(len(data))).encode() + b"\00" + data).hexdigest()
+    sha = hashlib.sha1(
+        (fmt + " " + str(len(data))).encode() + b"\00" + data
+    ).hexdigest()
     if write:
         obj_dir = repo_find() / "objects" / sha[:2]
         if not obj_dir.exists():
             obj_dir.mkdir()
         with (obj_dir / sha[2:]).open("wb") as file:
-            file.write(zlib.compress((fmt + " " + str(len(data))).encode() + b"\00" + data))
+            file.write(
+                zlib.compress((fmt + " " + str(len(data))).encode() + b"\00" + data)
+            )
     return sha
 
 

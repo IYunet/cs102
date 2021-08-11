@@ -19,4 +19,3 @@ class Request:
     def json(self) -> tp.Optional[tp.Dict[str, tp.Any]]:
         # PUT YOUR CODE HERE
         pass
-

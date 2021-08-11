@@ -1,36 +1,65 @@
-from bottle import (
-    route, run, template, request, redirect
-)
+import string
 
-from scrapper import get_news
-from db import News, session
+from bottle import redirect, request, route, run, template
+
 from bayes import NaiveBayesClassifier
+from db import News, change_label, put_data_into_table, session
+from scraputils import get_news_more
 
 
 @route("/news")
-def news_list():
+def news_list():  # type: ignore
     s = session()
     rows = s.query(News).filter(News.label == None).all()
-    return template('news_template', rows=rows)
+    return template("news_template", rows=rows)
 
 
 @route("/add_label/")
-def add_label():
-    # PUT YOUR CODE HERE
+def add_label():  # type: ignore
+    s = session()
+    id = request.query["id"]
+    label = request.query["label"]
+    change_label(s, id, label)
     redirect("/news")
+
+
+counter_update_news = 3
 
 
 @route("/update")
-def update_news():
-    # PUT YOUR CODE HERE
+def update_news():  # type: ignore
+    global counter_update_news
+    url = "https://news.ycombinator.com/news?p=" + str(counter_update_news)
+    put_data_into_table(get_news_more(url))
+    counter_update_news += 1
     redirect("/news")
 
 
+colors = {"good": "#00d2fe", "never": "#180f3b", "maybe": "#969696"}
+
+
 @route("/classify")
-def classify_news():
-    # PUT YOUR CODE HERE
+def classify_news():  # type: ignore
+    global colors
+    s = session()
+    model = NaiveBayesClassifier()
+    train_set = s.query(News).filter(News.label != None).all()
+    model.fit(
+        [clean(news.title).lower() for news in train_set],
+        [news.label for news in train_set],
+    )
+    test = s.query(News).filter(News.label == None).all()
+    cell = list(map(lambda x: model.predict(x.title), test))
+    return template(
+        "color_template",
+        rows=list(map(lambda x: (x[1], colors[cell[x[0]]]), enumerate(test))),
+    )
+
+
+def clean(s: str) -> str:
+    translator = str.maketrans("", "", string.punctuation)
+    return s.translate(translator)
 
 
 if __name__ == "__main__":
     run(host="localhost", port=8080)
-

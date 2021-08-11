@@ -29,4 +29,3 @@ class WSGIRequestHandler(BaseHTTPRequestHandler):
         # ответ приложения представить в виде байтовой строки
         # вернуть объект класса WSGIResponse
         pass
-

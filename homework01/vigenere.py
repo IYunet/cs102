@@ -67,13 +67,17 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         if a_first <= code_letter <= z_last:
             check_negative = code_letter - a_first - shift
             if check_negative < 0:
-                check_negative = (language - (check_negative * (-1) % language)) % language
+                check_negative = (
+                    language - (check_negative * (-1) % language)
+                ) % language
             k = chr(check_negative + a_first)
             plaintext += k
         elif A_first <= code_letter <= Z_last:
             check_negative = code_letter - A_first - shift
             if check_negative < 0:
-                check_negative = (language - (check_negative * (-1) % language)) % language
+                check_negative = (
+                    language - (check_negative * (-1) % language)
+                ) % language
             k = chr(check_negative + A_first)
             plaintext += k
         else:

@@ -53,7 +53,11 @@ class GameOfLife:
         row, col = cell
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if self.rows > row + i >= 0 and self.cols > col + j >= 0 and (i, j) != (0, 0):
+                if (
+                    self.rows > row + i >= 0
+                    and self.cols > col + j >= 0
+                    and (i, j) != (0, 0)
+                ):
                     neighbours += [self.curr_generation[row + i][col + j]]
         return neighbours
 
@@ -61,9 +65,14 @@ class GameOfLife:
         clone_grid = self.create_grid(False)
         for i in range(self.rows):
             for j in range(self.cols):
-                if sum(self.get_neighbours((i, j))) == 3 and (self.curr_generation[i][j] == 0):
+                if sum(self.get_neighbours((i, j))) == 3 and (
+                    self.curr_generation[i][j] == 0
+                ):
                     clone_grid[i][j] = 1
-                elif 1 < sum(self.get_neighbours((i, j))) < 4 and self.curr_generation[i][j] == 1:
+                elif (
+                    1 < sum(self.get_neighbours((i, j))) < 4
+                    and self.curr_generation[i][j] == 1
+                ):
                     clone_grid[i][j] = 1
         return clone_grid
 
