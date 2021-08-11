@@ -1,7 +1,7 @@
 import pathlib
 import sys
 
-import requests
+import requests  # type: ignore
 from bs4 import BeautifulSoup
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent))

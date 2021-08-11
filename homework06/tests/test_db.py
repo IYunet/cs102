@@ -27,8 +27,6 @@ test_news = [
 ]
 
 Base = declarative_base()
-engine = create_engine("sqlite:///news.db")
-session = sessionmaker(bind=engine)
 
 
 class News(Base):  # type: ignore
@@ -39,9 +37,6 @@ class News(Base):  # type: ignore
     url = Column(String)
     points = Column(Integer)
     label = Column(String)
-
-
-Base.metadata.create_all(bind=engine)
 
 
 def db_set_up(engine):
