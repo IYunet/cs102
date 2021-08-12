@@ -24,6 +24,3 @@ jobs:
     - name: Run pylint
       run: |
         pylint --exit-zero homework07-web
-    - name: Run PyTest
-      run: |
-        pytest homework07-web
