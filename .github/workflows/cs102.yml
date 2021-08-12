@@ -20,10 +20,10 @@ jobs:
         black -l 100 --check --diff --color --exclude "test*" homework07-web
     - name: Run mypy
       run: |
-        mypy --ignore-missing-imports ${{ github.head_ref }} --exclude "tests"
+        mypy --ignore-missing-imports homework07-web --exclude "tests"
     - name: Run pylint
       run: |
-        pylint --exit-zero ${{ github.head_ref }}
+        pylint --exit-zero homework07-web
     - name: Run PyTest
       run: |
-        pytest ${{ github.head_ref }}
+        pytest homework07-web
